@@ -13,14 +13,3 @@ The documentation will be improved in the coming days, in addition to cleanup an
     - scripts used to build plantNet-500k 
 - `paper/notebooks` contain the notebooks used to analyze the datasets and generate the plots  
 
-## Preliminary "getting started" (TODO)
-### WanDB setup
-```bash
-export WANDB_API_KEY=[REDACTED]
-export WANDB_ENTITY=anhaltai
-export WANDB_PROJECT=plant-image-classification
-```
-### Start sweeps
-`./scripts/create_sweep.sh`
-
-
