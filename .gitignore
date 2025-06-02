@@ -192,3 +192,15 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+
+#######
+# Source repo
+.idea
+venv
+wandb
+lightning_logs
+models
+.ipynb_checkpoints
+
+# 1.6gb metadata file
+plantNaturalist500k.gbif.metadata.csv

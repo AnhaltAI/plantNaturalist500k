@@ -1,0 +1,13 @@
+FROM python:3.10
+
+ARG WANDB_API_KEY
+
+# install python requirements
+COPY requirements.txt requirements.txt
+RUN python3 -m pip install -r requirements.txt
+
+# copy data
+COPY src/anhaltai_pic anhaltai_pic
+
+# wandb login and start training
+CMD huggingface-cli login --token $HUGGINGFACE_TOKEN & python3 -m anhaltai_pic.wandb_utils.sweep_agent

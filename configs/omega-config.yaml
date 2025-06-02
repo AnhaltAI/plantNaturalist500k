@@ -1,0 +1,6 @@
+dataset_name: anhaltai/plantnet-300k
+# dataset_name: mnist
+
+batch_size: 200
+epochs: 200
+lr: 2

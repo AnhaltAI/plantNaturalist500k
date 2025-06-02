@@ -1,0 +1,74 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: bmvc-sweep-4
+  namespace: paper-plants
+spec:
+  parallelism: 8
+  backoffLimit: 0
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - malea-srv01
+                      - ki-srv01
+      containers:
+        - name: plants-hf-sweep-agent
+          image: anhaltai/plant-image-classification:2024.04.26-1
+          env:
+            - name: WANDB_API_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: sweep-config
+                  key: WANDB_API_KEY
+            - name: WANDB_ENTITY
+              valueFrom:
+                configMapKeyRef:
+                  name: sweep-config
+                  key: WANDB_ENTITY
+            - name: WANDB_PROJECT
+              valueFrom:
+                configMapKeyRef:
+                  name: sweep-config
+                  key: WANDB_PROJECT
+            - name: WANDB_SWEEP_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: sweep-config
+                  key: WANDB_SWEEP_ID
+            - name: HUGGINGFACE_TOKEN
+              valueFrom:
+                configMapKeyRef:
+                  name: sweep-config
+                  key: HUGGINGFACE_TOKEN
+            - name: HF_HOME
+              value: /.huggingface
+            - name: HUGGINGFACE_CACHE
+              value: /.huggingface
+          volumeMounts:
+            - name: huggingface-cache
+              mountPath: /.huggingface
+            - name: dshm
+              mountPath: /dev/shm
+          resources:
+            limits:
+              memory: "128Gi"
+              cpu: "16"
+              nvidia.com/gpu: "1"
+      volumes:
+        - name: sweep-config
+          configMap:
+            name: sweep-config
+        - name: dshm
+          emptyDir:
+            medium: Memory
+        - name: huggingface-cache
+          persistentVolumeClaim:
+            claimName: huggingface-cache-pvc
+      restartPolicy: Never

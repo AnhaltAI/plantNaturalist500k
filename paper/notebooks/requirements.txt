@@ -1,0 +1,14 @@
+seaborn
+pandas
+numpy
+plotly
+# breaks on python 3,12 because `imp`
+# vaex
+datasets
+pyarrow
+tabulate
+adjustText
+openpyxl
+geopandas
+geoplot
+itables

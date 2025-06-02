@@ -1,0 +1,43 @@
+method: "grid"
+name: "bmvc-sweep-plantnet-v3"
+metric:
+  name: "eval/accuracy_micro"
+  goal: "maximize"
+parameters:
+  dataset_name:
+    values:
+      - "anhaltai/plantNaturalist500k-384"
+      - "anhaltai/plantnet300k-384"
+  model_name:
+    values:
+      - "microsoft/resnet-26"
+#      - "microsoft/resnet-152"
+      - "google/efficientnet-b0"
+#      - "google/efficientnet-b7"
+      - "google/vit-base-patch16-384"
+      - "google/vit-large-patch16-384"
+#      - "microsoft/swin-base-patch4-window12-384-in22k"
+#      - "microsoft/swin-large-patch4-window12-384-in22k"
+#      - "microsoft/swinv2-base-patch4-window12to24-192to384-22kto1k-ft"
+#      - "microsoft/swinv2-large-patch4-window12to24-192to384-22kto1k-ft"
+  class_name:
+    values:
+      - "species"
+  batch_size:
+    values:
+      - 16
+  max_epochs:
+    values:
+      - 100
+  learning_rate:
+    values:
+      - 0.0001
+  item_limit:
+    values:
+      - 0
+  early_stopping_patience:
+    values:
+      - 5
+  load_pretrained_weights:
+    values:
+      - true
